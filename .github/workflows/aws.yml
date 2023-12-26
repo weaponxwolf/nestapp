@@ -32,17 +32,8 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          IMAGE_NAME: your-image-name
         run: |
-          # Log in to AWS ECR
-          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
-
-          # Build Docker image
-          docker build -t $IMAGE_NAME .
-
-          # Tag the Docker image
-          docker tag $IMAGE_NAME:latest $ECR_REGISTRY/$IMAGE_NAME:latest
-
-          # Push Docker image to ECR
-          docker push $ECR_REGISTRY/$IMAGE_NAME:latest
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 871132954158.dkr.ecr.us-east-1.amazonaws.com
+          docker build -t nestapp .
+          docker tag nestapp:latest 871132954158.dkr.ecr.us-east-1.amazonaws.com/nestapp:latest
+          docker push 871132954158.dkr.ecr.us-east-1.amazonaws.com/nestapp:latest
