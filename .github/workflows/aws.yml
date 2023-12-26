@@ -33,6 +33,9 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set region ${{ secrets.AWS_DEFAULT_REGION }}
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 871132954158.dkr.ecr.us-east-1.amazonaws.com
           docker build -t nestapp .
           docker tag nestapp:latest 871132954158.dkr.ecr.us-east-1.amazonaws.com/nestapp:latest
